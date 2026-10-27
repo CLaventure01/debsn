@@ -330,9 +330,9 @@ async function openWorkspace(user) {
     showAuthNotice("Your account is signed in, but the Debsn profile database is not ready. Apply the Supabase migration from supabase/migrations, then try again.", true);
     return;
   }
-  if (!data || data.approval_status !== "approved") {
+  if (!data || data.approval_status === "suspended") {
     showAuth();
-    showAuthNotice("Your email is confirmed. Your Debsn workspace account is awaiting owner approval.");
+    showAuthNotice("This Debsn account is currently suspended. Contact your workspace administrator.", true);
     return;
   }
   initDashboard(user, data);

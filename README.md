@@ -1,6 +1,6 @@
 # Debsn’s Inc. Delivery
 
-Local Vite app for the Debsn delivery operations dashboard. Supabase Auth is wired for email/password accounts, email confirmation, password reset, and an approval gate. The delivery screens still use sample browser data; live orders, driver accounts, routing, and delivery notifications are separate build work.
+Local Vite app for the Debsn delivery operations dashboard. Supabase Auth is wired for email/password accounts, email confirmation, password reset, and automatic access after email confirmation. The delivery screens still use sample browser data; live orders, driver accounts, routing, and delivery notifications are separate build work.
 
 ## Run locally
 
@@ -12,9 +12,9 @@ The local `.env.local` is gitignored. The publishable key is designed for browse
 
 ## Authentication and initial owner
 
-The Supabase project has the `profiles` table, signup trigger, and row-level security migration in `supabase/migrations/202610270001_profiles_auth.sql`. New accounts default to `pending`, and the client hides the delivery workspace until an account is approved.
+The Supabase project has the `profiles` table, signup trigger, and row-level security migration in `supabase/migrations/202610270001_profiles_auth.sql`. New accounts get the `dispatcher` role and can enter the workspace after confirming their email; owner approval is not required. Suspended accounts remain blocked.
 
-Email confirmation is enabled in Supabase Auth. After the first owner signs up and confirms their email, run `supabase/bootstrap-owner.example.sql` in the Supabase SQL Editor after replacing `REPLACE_WITH_OWNER_EMAIL` with the exact owner email. This is a one-time manual bootstrap; the first signup is never automatically privileged. The migration also exposes an owner-checked `approve_workspace_member(user_id, role)` RPC for a future member-management screen.
+Email confirmation is enabled in Supabase Auth. Any confirmed user can sign in. If you need a workspace owner role for a future member-management screen, run `supabase/bootstrap-owner.example.sql` in the Supabase SQL Editor after replacing `REPLACE_WITH_OWNER_EMAIL` with the exact owner's email. The migration also exposes an owner-checked `approve_workspace_member(user_id, role)` RPC for future role management.
 
 For password reset and email confirmation links, local development uses `http://localhost:3000`, which matches the current Supabase Site URL. Add the eventual production URL to Supabase Auth's allowed redirect URLs before publishing the app.
 
