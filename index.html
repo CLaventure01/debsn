@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f6f3" />
+    <meta name="description" content="Debsn delivery operations dashboard." />
+    <title>Debsn — Delivery operations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <section class="auth-screen" id="auth-screen" aria-labelledby="auth-title" hidden>
+      <div class="auth-card">
+        <a class="brand auth-brand" href="#" aria-label="Debsn"><span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span><span class="brand-name">debsn<span class="brand-period">.</span></span></a>
+        <p class="overline">DEBSN’S INC. DELIVERY</p>
+        <h1 id="auth-title">Sign in to your workspace</h1>
+        <p class="auth-intro">Manage orders, dispatch, and delivery updates in one place.</p>
+        <div id="auth-notice" class="auth-notice" role="status" aria-live="polite" hidden></div>
+        <form id="auth-form" class="auth-form">
+          <label class="field" id="auth-name-field" hidden><span>Your name</span><input id="auth-name" name="name" autocomplete="name" /></label>
+          <label class="field"><span>Email address</span><input id="auth-email" name="email" type="email" autocomplete="email" required /></label>
+          <label class="field"><span>Password</span><input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="8" required /></label>
+          <button class="button button-primary auth-submit" id="auth-submit" type="submit">Sign in <span>→</span></button>
+        </form>
+        <div class="auth-links"><button class="text-button" id="auth-mode-toggle" type="button">Create an account</button><button class="text-button" id="auth-reset" type="button">Forgot password?</button></div>
+        <p class="auth-footnote">New accounts require workspace approval before they can access delivery data.</p>
+      </div>
+    </section>
+    <div class="app-shell" id="app-shell" hidden>
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#overview" aria-label="Debsn home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span class="brand-name">debsn<span class="brand-period">.</span></span>
+        </a>
+
+        <div class="workspace-switcher">
+          <div class="workspace-avatar">D</div>
+          <div class="workspace-copy"><span class="eyebrow">WORKSPACE</span><strong>Debsn’s Inc.</strong></div>
+          <span class="chevron">⌄</span>
+        </div>
+
+        <div class="nav-label">WORKSPACE</div>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a class="nav-link active" href="#overview" data-view="overview"><span class="nav-icon">◫</span><span>Overview</span></a>
+          <a class="nav-link" href="#orders" data-view="orders"><span class="nav-icon">▤</span><span>Orders</span><span class="nav-count" id="nav-order-count">0</span></a>
+          <a class="nav-link" href="#dispatch" data-view="dispatch"><span class="nav-icon">⌁</span><span>Dispatch</span></a>
+          <a class="nav-link" href="#drivers" data-view="drivers"><span class="nav-icon">♧</span><span>Drivers</span></a>
+        </nav>
+
+        <div class="nav-label nav-label-spaced">MANAGE</div>
+        <nav class="main-nav" aria-label="Management navigation">
+          <a class="nav-link" href="#activity" data-view="activity"><span class="nav-icon">◷</span><span>Activity</span><span class="unread-dot" id="activity-dot" hidden></span></a>
+          <a class="nav-link" href="#reports" data-view="reports"><span class="nav-icon">▥</span><span>Reports</span></a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="help-card"><div class="help-icon">?</div><strong>Need a hand?</strong><p>We’re here to help you get moving.</p><button class="text-button" id="help-button">Visit help center <span>↗</span></button></div>
+          <button class="profile-button" id="profile-button" aria-label="Sign out"><span class="profile-avatar" id="user-avatar">U</span><span class="profile-copy"><strong id="user-name">User</strong><small id="user-role">Pending approval</small></span><span class="more-icon">↪</span></button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <button class="mobile-menu icon-button" id="mobile-menu" aria-label="Open navigation">☰</button>
+          <div class="breadcrumbs"><span>Workspace</span><span class="slash">/</span><strong id="breadcrumb-current">Overview</strong></div>
+          <div class="topbar-actions">
+            <span class="prototype-badge" id="connection-badge"><span></span> Sample delivery data · account secured</span>
+            <button class="icon-button search-shortcut" id="focus-search" aria-label="Search">⌕</button>
+            <button class="icon-button notification-button" id="notification-button" aria-label="Notifications"><span class="bell">♧</span><span class="notification-pip" id="notification-pip" hidden></span></button>
+            <div class="topbar-divider"></div>
+            <div class="date-display"><span class="date-icon">▦</span><span id="today-label"></span></div>
+          </div>
+        </header>
+
+        <div class="page-wrap">
+          <section class="page-heading">
+            <div><p class="overline" id="page-overline">TUESDAY, OCTOBER 27, 2026</p><h1 id="page-title">Good morning, Chantall <span class="wave">✳</span></h1><p class="page-subtitle" id="page-subtitle">Here’s what’s happening with your deliveries today.</p></div>
+            <button class="button button-primary" id="new-order-button"><span class="plus">＋</span> New order</button>
+          </section>
+
+          <section class="overview-view" id="overview-view">
+            <div class="section-heading"><div><h2>Today at a glance</h2><p>A quick look at your operation.</p></div><button class="date-chip" id="date-chip"><span>▦</span> Today <span class="chevron-small">⌄</span></button></div>
+            <div class="metric-grid" id="metric-grid"></div>
+
+            <div class="content-grid overview-grid">
+              <section class="panel orders-panel">
+                <div class="panel-heading"><div><h2>Delivery orders</h2><p id="orders-count-label">Your latest activity across all orders.</p></div><button class="button button-secondary button-small" data-view-link="orders">View all <span>→</span></button></div>
+                <div class="table-toolbar"><label class="search-box"><span>⌕</span><input id="order-search" type="search" placeholder="Search orders..." autocomplete="off" /><kbd>⌘ K</kbd></label><div class="filter-wrap"><button class="filter-button" id="status-filter-button"><span>☷</span><span id="status-filter-label">All statuses</span><span class="chevron-small">⌄</span></button><div class="filter-menu" id="status-filter-menu" hidden><button data-filter="all">All statuses</button><button data-filter="needs_review">Needs review</button><button data-filter="ready">Ready for scheduling</button><button data-filter="assigned">Assigned</button><button data-filter="en_route">En route</button><button data-filter="arrived">Arrived</button><button data-filter="completed">Completed</button></div></div></div>
+                <div class="table-scroll"><table class="orders-table"><thead><tr><th>ORDER</th><th>CUSTOMER</th><th>DELIVERY DATE</th><th>DRIVER</th><th>STATUS</th><th></th></tr></thead><tbody id="orders-table-body"></tbody></table></div>
+                <div class="empty-state" id="orders-empty" hidden><span class="empty-icon">▤</span><strong>No matching orders</strong><p>Try changing your search or status filter.</p><button class="text-button" id="clear-filters">Clear filters</button></div>
+                <div class="table-footer"><span id="table-range"></span><div class="pagination"><button aria-label="Previous page" disabled>←</button><button class="current-page">1</button><button aria-label="Next page" disabled>→</button></div></div>
+              </section>
+
+              <aside class="side-stack">
+                <section class="panel arrival-panel"><div class="panel-heading panel-heading-tight"><div><div class="inline-title"><span class="live-dot"></span><h2>Driver arrivals</h2></div><p>Arrivals reported by your team.</p></div><button class="more-button" aria-label="Arrival options">···</button></div><div class="arrival-list" id="arrival-list"></div><div class="panel-link-wrap"><button class="text-button" data-view-link="activity">View activity <span>→</span></button></div></section>
+                <section class="route-card"><div class="route-topline"><span class="route-label"><span>⌁</span> TODAY’S ROUTES</span><button class="more-button route-more" aria-label="Route options">···</button></div><div class="route-number" id="route-count">0 <span>active routes</span></div><div class="route-visual" aria-hidden="true"><div class="route-map-grid"></div><svg viewBox="0 0 320 110" preserveAspectRatio="none"><path class="map-road road-one" d="M-8 25 C53 44 75 8 127 25 S194 57 237 30 S291 19 332 37"/><path class="map-road road-two" d="M20 115 C44 75 35 47 84 38 S163 84 174 50 S218 7 224 -6"/><path class="map-road road-three" d="M104 116 C118 87 155 83 179 99 S239 94 272 60 S294 42 320 52"/><path class="route-path" d="M45 76 C74 82 78 30 124 34 S166 73 203 55 S243 27 278 39"/><circle class="map-pin" cx="45" cy="76" r="5"/><circle class="map-stop" cx="124" cy="34" r="4"/><circle class="map-stop" cx="203" cy="55" r="4"/><circle class="map-pin map-pin-end" cx="278" cy="39" r="5"/></svg><span class="map-tag map-tag-a">NORTH</span><span class="map-tag map-tag-b">DOWNTOWN</span><span class="map-tag map-tag-c">EASTSIDE</span></div><div class="route-footer"><div class="avatar-stack" id="route-avatars"></div><span id="route-summary">No routes scheduled yet</span><button class="round-arrow" data-view-link="dispatch" aria-label="Open dispatch">↗</button></div></section>
+              </aside>
+            </div>
+          </section>
+
+          <section class="secondary-view" id="secondary-view" hidden>
+            <div id="secondary-content"></div>
+          </section>
+          <footer class="page-footer"><span>© 2026 Debsn’s Inc.</span><span class="footer-links"><a href="#privacy">Privacy</a><a href="#terms">Terms</a><span class="footer-status"><span></span> All systems operational</span></span></footer>
+        </div>
+      </main>
+    </div>
+
+    <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+    <dialog class="modal" id="order-modal">
+      <form method="dialog" class="modal-card" id="order-form">
+        <div class="modal-header"><div><p class="overline">NEW DELIVERY</p><h2>Create an order</h2><p>Add a delivery to your dispatch queue.</p></div><button class="icon-button modal-close" value="cancel" aria-label="Close">×</button></div>
+        <div class="form-grid"><label class="field full-width"><span>Customer name <i>*</i></span><input name="customer" required placeholder="e.g. Sarah Williams" /></label><label class="field"><span>Phone number</span><input name="phone" type="tel" placeholder="(555) 555-0100" /></label><label class="field"><span>Store</span><input name="store" placeholder="Store name" /></label><label class="field full-width"><span>Delivery address <i>*</i></span><input name="address" required placeholder="Street, city, state, ZIP" /></label><label class="field"><span>Appliance</span><input name="appliance" placeholder="e.g. Refrigerator" /></label><label class="field"><span>Delivery date</span><input name="date" type="date" /></label><label class="field full-width"><span>Instructions</span><textarea name="instructions" rows="3" placeholder="Access notes, installation details..."></textarea></label></div>
+        <div class="modal-actions"><button class="button button-secondary" value="cancel">Cancel</button><button class="button button-primary" type="submit">Create order <span>→</span></button></div>
+      </form>
+    </dialog>
+
+    <dialog class="modal detail-modal" id="detail-modal"><div class="modal-card" id="detail-content"></div></dialog>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
